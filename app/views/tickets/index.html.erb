@@ -1,0 +1,35 @@
+<div class="container">
+  <% if @tickets.present? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Request number</th>
+          <th>Sequence number</th>
+          <th>Request type</th>
+          <th>Response due date time</th>
+          <th>Primary service area code</th>
+          <th>Additional service area codes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tickets.each do |ticket| %>
+          <tr>
+            <td><%= link_to(ticket.id, ticket_path(ticket)) %></td>
+            <td><%= ticket.request_number %></td>
+            <td><%= ticket.sequence_number %></td>
+            <td><%= ticket.request_type %></td>
+            <td><%= format_date(ticket.response_due_date_time) %></td>
+            <td><%= ticket.primary_service_area_code %></td>
+            <td><%= (ticket.additional_service_area_codes || []).join(", ") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div>
+      <%= will_paginate @tickets %>
+    </div>
+  <% else %>
+    <div class="text-center">No tickets found</div>
+  <% end %>
+</div>
